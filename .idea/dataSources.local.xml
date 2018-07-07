@@ -8,5 +8,13 @@
       <auth-required>false</auth-required>
       <introspection-schemas>*</introspection-schemas>
     </data-source>
+    <data-source name="Django default" uuid="68870984-bc57-4d1c-9038-2c97335fab66">
+      <database-info product="PostgreSQL" version="10.4" jdbc-version="4.0" driver-name="PostgreSQL Native Driver" driver-version="PostgreSQL 9.4.1212">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <user-name>postgres</user-name>
+      <introspection-schemas>krazeline:public</introspection-schemas>
+    </data-source>
   </component>
 </project>

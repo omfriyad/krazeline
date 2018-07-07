@@ -1,7 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse('this is make up site')
+    return render(request, 'makeup/index.html')
 
 # Create your views here.

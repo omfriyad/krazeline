@@ -9,7 +9,7 @@ class Makeup(models.Model):
     description1 = models.TextField()
     description2 = models.TextField()
     description3 = models.TextField()
-    image = models.ImageField()
+    image = models.ImageField(upload_to='files/makeup')
     youtube_link = models.URLField()
     datetime = models.DateTimeField(default=timezone.now)
 
