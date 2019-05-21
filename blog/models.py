@@ -15,9 +15,9 @@ class Genre(models.Model):
 class Post(models.Model):
     image = models.ImageField(blank=True)
     title = models.CharField(max_length=60)
-    short_dec = models.CharField(max_length=155, blank=True)
+    short_des = models.CharField(max_length=155, blank=True)
     genre = models.ForeignKey(Genre, on_delete=None, blank=True)
-    long_dec = models.CharField(max_length=63300)
+    long_des = models.TextField(max_length=63300)
     writer = models.ForeignKey(User, on_delete=None)
     likes = models.IntegerField()
     date = models.DateField(auto_now_add=True)
@@ -29,7 +29,7 @@ class Post(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
-    comment = models.CharField(max_length=155)
+    comment = models.TextField(max_length=155)
     datetime = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
