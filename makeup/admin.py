@@ -3,3 +3,4 @@ from .models import Makeup
 # Register your models here.
 
 admin.site.register(Makeup)
+
