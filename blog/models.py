@@ -13,7 +13,7 @@ class Genre(models.Model):
 
 
 class Post(models.Model):
-    image = models.ImageField(blank=True)
+    image = models.ImageField(blank=True, upload_to='files/blog/')
     title = models.CharField(max_length=60)
     short_des = models.CharField(max_length=155, blank=True)
     genre = models.ForeignKey(Genre, on_delete=None, blank=True)

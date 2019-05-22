@@ -1,3 +1,4 @@
+from django.utils.datastructures import MultiValueDictKeyError
 from django.shortcuts import render
 from landing.forms import UserForm,UserProfileInfoForm
 from django.contrib.auth import authenticate, login, logout
@@ -7,7 +8,20 @@ from django.contrib.auth.decorators import login_required
 
 
 def index(request):
-    return render(request, 'landing/index.html')
+    context = {'title': 'Home'}
+    mode = 'landing'
+    try:
+        nav = request.GET['']
+        mode = 'nav'
+    except MultiValueDictKeyError:
+        pass
+    try:
+        query = request.GET['query']
+        mode = 'search'
+    except MultiValueDictKeyError:
+        pass
+
+    return render(request, 'landing/index.html', context=context)
 
 # def login(request):
 #     return render(request,'landing/login.html')
@@ -55,6 +69,11 @@ def register(request):
 
 
 def user_login(request):
+    if request.method == 'GET':
+        if request.user.pk is not None:
+            print(request.user.pk)
+            return HttpResponseRedirect(reverse('landing'))
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
