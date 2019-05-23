@@ -5,19 +5,25 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from blog.models import Post
 
 
 def index(request):
-    context = {'title': 'Home'}
+    context = {'title': 'HOME',
+               'about': 'Welcome to the home of awesomeness!',
+               'posts': Post.objects.all()}
+
     mode = 'landing'
     try:
         nav = request.GET['']
         mode = 'nav'
+        context['about'] = 'Explore: ' + str(nav)
     except MultiValueDictKeyError:
         pass
     try:
         query = request.GET['query']
         mode = 'search'
+        context['about'] = 'Search Results: ' + str(query)
     except MultiValueDictKeyError:
         pass
 
@@ -25,6 +31,7 @@ def index(request):
 
 # def login(request):
 #     return render(request,'landing/login.html')
+
 
 def error(request):
     return render(request, 'error405.html', context={'error': 'Error'})
@@ -62,10 +69,11 @@ def register(request):
     else:
         user_form = UserForm()
         profile_form = UserProfileInfoForm()
+
     return render(request, 'landing/registration.html',
-                          {'user_form':user_form,
-                           'profile_form':profile_form,
-                           'registered':registered})
+                          {'user_form': user_form,
+                           'profile_form': profile_form,
+                           'registered': registered})
 
 
 def user_login(request):
@@ -86,7 +94,8 @@ def user_login(request):
                 return HttpResponse("Your account was inactive.")
         else:
             print("Someone tried to login and failed.")
-            print("They used username: {} and password: {}".format(username,password))
+            print("They used username: {} and password: {}".format(username, password))
             return HttpResponse("Invalid login details given")
     else:
         return render(request, 'landing/login.html', {})
+
