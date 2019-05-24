@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.shortcuts import HttpResponse
+from django.core.files.storage import FileSystemStorage
 from blog.forms import PostForm
 from blog.models import Post
 # Create your views here.
@@ -10,11 +11,11 @@ def index(request):
 
     try:
         id = request.GET['id']
-        return render(request, 'blog/index.html', context={'post':Post.objects.get(pk=id)})
+        return render(request, 'blog/index.html', context={'post': Post.objects.get(pk=id)})
     except MultiValueDictKeyError:
         return redirect('/')
 
-    return render(request, 'blog/index.html')
+    # return render(request, 'blog/index.html')
 
 
 def new(request):
@@ -24,12 +25,11 @@ def new(request):
             return render(request, 'blog/new.html', context = context)
 
         if request.method == 'POST':
-            form = PostForm(request.POST)
+            form = PostForm(request.POST, request.FILES)
+            print(request.FILES.keys())
             if form.is_valid():
                 post = form.save(commit=False)
                 post.writer = request.user
-                print(request.FILES)
-                #post.image = request.FILES['image']
                 post.save()
             return redirect('/')
     else:
